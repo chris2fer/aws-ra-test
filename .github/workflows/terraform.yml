@@ -77,8 +77,11 @@ jobs:
         chmod +x ./aws_signing_helper
         echo ${{ secrets.PRIVATE_KEY }} | base64 --decode > priv_key.pem
         echo ${{ secrets.CERT_PEM }} | base64 --decode > cert.pem
-        ./aws_signing_helper credential-process --private-key priv_key.pem --certificate cert.pem --trust-anchor-arn ${{ secrets.TRUST_ANCHOR_ARN }} --role-arn ${{ secrets.TARGET_ROLE_ARN }} --profile-arn ${{ secrets.PROFILE_ARN }}
-
+        cred=$(./aws_signing_helper credential-process --private-key priv_key.pem --certificate cert.pem --trust-anchor-arn ${{ secrets.TRUST_ANCHOR_ARN }} --role-arn ${{ secrets.TARGET_ROLE_ARN }} --profile-arn ${{ secrets.PROFILE_ARN }})
+        export AWS_SESSION_TOKEN=$(echo $cred | jq .SessionToken)
+        export AWS_SECRET_ACCESS_KEY=$(echo $cred | jq .SecretAccessKey)
+        export AWS_ACCESS_KEY_ID=$(echo $cred | jq .AccessKeyId)
+        
 #     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
 #     - name: Setup Terraform
 #       uses: hashicorp/setup-terraform@v1
