@@ -77,11 +77,11 @@ jobs:
         chmod +x ./aws_signing_helper
         ./aws_signing_helper credential-process --private-key ${{ secrets.PRIVATE_KEY }} --certificate ${{ secrets.CERT_PEM }} --trust-anchor-arn ${{ secrets.TRUST_ANCHOR_ARN }} --role-arn ${{ secrets.TARGET_ROLE_ARN }} --profile-arn ${{ secrets.PROFILE_ARN }}
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+#     - name: Setup Terraform
+#       uses: hashicorp/setup-terraform@v1
+#       with:
+#         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
