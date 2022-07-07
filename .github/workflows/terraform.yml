@@ -75,7 +75,7 @@ jobs:
       run: |
         curl -O https://s3.amazonaws.com/roles-anywhere-credential-helper/CredentialHelper/latest/linux_amd64/aws_signing_helper
         chmod +x ./aws_signing_helper
-        ./aws_signing_helper credential-process
+        ./aws_signing_helper credential-process --private-key ${{ secrets.PRIVATE_KEY }} --certificate ${{ secrets.CERT_PEM }} --trust-anchor-arn ${{ secrets.TRUST_ANCHOR_ARN }} --role-arn ${{ secrets.TARGET_ROLE_ARN }} --profile-arn ${{ secrets.PROFILE_ARN }}
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
