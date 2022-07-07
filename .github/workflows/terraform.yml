@@ -54,21 +54,9 @@ permissions:
   contents: read
 
 jobs:
-  aws-auth:
-    name: 'AWS Roles Anywhere'
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    
-    - name: Download Cred Tool
-      run: |
-        curl -O https://s3.amazonaws.com/roles-anywhere-credential-helper/CredentialHelper/latest/linux_amd64/aws_signing_helper
-        chmod +x ./aws_signing_helper
-        ./aws_signing_helper
       
   terraform:
+    
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
@@ -82,6 +70,12 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
+    
+    - name: Download Cred Tool
+      run: |
+        curl -O https://s3.amazonaws.com/roles-anywhere-credential-helper/CredentialHelper/latest/linux_amd64/aws_signing_helper
+        chmod +x ./aws_signing_helper
+        ./aws_signing_helper credential-process
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
